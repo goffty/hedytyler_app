@@ -1,0 +1,29 @@
+<h1>Listing ingredient_recipes</h1>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Ingredient</th>
+      <th>Recipe</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ingredient_recipes.each do |ingredient_recipe| %>
+      <tr>
+        <td><%= ingredient_recipe.ingredient_id %></td>
+        <td><%= ingredient_recipe.recipe_id %></td>
+        <td><%= link_to 'Show', ingredient_recipe %></td>
+        <td><%= link_to 'Edit', edit_ingredient_recipe_path(ingredient_recipe) %></td>
+        <td><%= link_to 'Destroy', ingredient_recipe, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Ingredient recipe', new_ingredient_recipe_path %>

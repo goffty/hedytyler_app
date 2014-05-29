@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Username:</strong>
+  <%= @user.username %>
+</p>
+
+<p><strong>Recipes:</strong></p>
+<ul><% @user.recipes.each do |recipe| %> 
+  <li><%= recipe.name %> </li>
+  <% end %> 
+ </ul>
+
+
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>

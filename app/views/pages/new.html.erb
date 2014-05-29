@@ -1,0 +1,230 @@
+<ol class="breadcrumb">
+  <li><a href="#">Web Dev</a></li>
+  <li><a href="#">Final Project</a></li>
+  <li class="active">Homepage</li>
+  <span class="glyphicon glyphicon-cutlery"></span>
+</ol>
+
+<div class="jumbotron">
+  <h2>Find Recipes that Match Your Ingredients!</h2>
+  <p>Enter your favorite recipes and the key ingredients so that others can find recipes that fit with what's in their refrigerators!    
+  <p>
+  </p>
+    <img src="http://vafoodbanks.org/wp-content/uploads/2012/06/fresh_food.jpg" height="220" width="350">
+    <img src="http://coachdawnwrites.com/wp-content/uploads/2014/01/recipe-book.jpg" height="220" width="350">
+    <img src="http://beyondfitphysiques.com/wp-content/uploads/2012/07/salads.png" height="220" width="350">
+  </p>
+
+</div>
+
+
+<div class="page-header">
+  <h1>Users <small>Add yourself below if you're not on this list!</small></h1>
+</div>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.username %></td>
+        <td><%= link_to 'Show', user %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :username %><br>
+    <%= f.text_field :username %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<div class="page-header">
+  <h2> Share your favorite recipes by linking yourself to them!</h2>
+    </div>
+<%= form_for(@user_recipe) do |f| %>
+  <% if @user_recipe.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user_recipe.errors.count, "error") %> prohibited this user_recipe from being saved:</h2>
+
+      <ul>
+      <% @user_recipe.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :user_id %><br>
+    <%= f.collection_select :user_id, User.all, :id, :username %>
+  </div>
+  <div class="field">
+    <%= f.label :recipe_id %><br>
+    <%= f.collection_select :recipe_id, Recipe.all, :id, :name %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+
+
+<div class="page-header">
+  <h1>Recipes <small>What users have added so far!</small></h1>
+</div>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Url</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @recipes.each do |recipe| %>
+      <tr>
+        <td><%= recipe.name %></td>
+        <td><%= recipe.url %></td>
+        <td><%= link_to 'Show', recipe %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="page-header">
+  <h2>Add your own recipe here! <small>Link it with ingredients below.</small></h2>
+</div>
+<%= form_for(@recipe) do |f| %>
+  <% if @recipe.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@recipe.errors.count, "error") %> prohibited this recipe from being saved:</h2>
+
+      <ul>
+      <% @recipe.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :url %><br>
+    <%= f.text_field :url %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+
+  <div class="page-header">
+  <h2>Link your recipe with its ingredients!<small> If you can't find your ingredient, add it below this form!</small></h2>
+</div>
+<%= form_for(@recipe_ingredient) do |f| %>
+  <% if @recipe_ingredient.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@recipe_ingredient.errors.count, "error") %> prohibited this recipe_ingredient from being saved:</h2>
+
+      <ul>
+      <% @recipe_ingredient.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :recipe_id %><br>
+    <%= f.collection_select :recipe_id, Recipe.all, :id, :name %>
+  </div>
+  <div class="field">
+    <%= f.label :ingredient_id %><br>
+    <%= f.collection_select :ingredient_id, Ingredient.all, :id, :name %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+ <div class="page-header">
+  <h2>Existing ingredients<small> Or add your own below! Click on an ingredient to see recipes that use it.</small></h2>
+</div>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ingredients.each do |ingredient| %>
+      <tr>
+        <td><%= ingredient.name %></td>
+        <td><%= link_to 'Show', ingredient %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table> 
+
+
+  <div class="page-header">
+  <h2> Add your own ingredient</h2>
+    </div>
+<%= form_for(@ingredient) do |f| %>
+  <% if @ingredient.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ingredient.errors.count, "error") %> prohibited this ingredient from being saved:</h2>
+
+      <ul>
+      <% @ingredient.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
